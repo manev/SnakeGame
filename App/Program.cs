@@ -46,7 +46,7 @@ namespace SnakeProgram
 
         private static void InitTimer()
         {
-            var timer = new Timer(100);
+            var timer = new Timer(50);
             timer.Elapsed += OnTimerElapsed;
             timer.Enabled = true;
             timer.Start();
