@@ -1,0 +1,13 @@
+D:\work\Snake\ConsoleApp1\bin\Debug\netcoreapp3.1\SnakeApp.exe
+D:\work\Snake\ConsoleApp1\bin\Debug\netcoreapp3.1\SnakeApp.deps.json
+D:\work\Snake\ConsoleApp1\bin\Debug\netcoreapp3.1\SnakeApp.runtimeconfig.json
+D:\work\Snake\ConsoleApp1\bin\Debug\netcoreapp3.1\SnakeApp.runtimeconfig.dev.json
+D:\work\Snake\ConsoleApp1\bin\Debug\netcoreapp3.1\SnakeApp.dll
+D:\work\Snake\ConsoleApp1\bin\Debug\netcoreapp3.1\SnakeApp.pdb
+D:\work\Snake\ConsoleApp1\obj\Debug\netcoreapp3.1\SnakeApp.csprojAssemblyReference.cache
+D:\work\Snake\ConsoleApp1\obj\Debug\netcoreapp3.1\SnakeApp.AssemblyInfoInputs.cache
+D:\work\Snake\ConsoleApp1\obj\Debug\netcoreapp3.1\SnakeApp.AssemblyInfo.cs
+D:\work\Snake\ConsoleApp1\obj\Debug\netcoreapp3.1\SnakeApp.csproj.CoreCompileInputs.cache
+D:\work\Snake\ConsoleApp1\obj\Debug\netcoreapp3.1\SnakeApp.dll
+D:\work\Snake\ConsoleApp1\obj\Debug\netcoreapp3.1\SnakeApp.pdb
+D:\work\Snake\ConsoleApp1\obj\Debug\netcoreapp3.1\SnakeApp.genruntimeconfig.cache
