@@ -19,6 +19,14 @@ namespace SnakeApp
             }
         }
 
+        public IList<Point> Position
+        {
+            get
+            {
+                return positions.ToArray();
+            }
+        }
+
         public bool Print(ConsoleKey key, Point targetPoint)
         {
             ClearLastPoint();
@@ -40,12 +48,6 @@ namespace SnakeApp
 
             return hasInterceptions;
         }
-
-        public IList<Point> GetPosition()
-        {
-            return positions;
-        }
-
 
         private Point GetNextPoint(ConsoleKey key)
         {

@@ -97,7 +97,7 @@ namespace SnakeProgram
 
             var applePosition = apple.Position;
 
-            var snakePositions = snake.GetPosition();
+            // var snakePosition = snake.Position;
 
             if (snakeHeadPosition.X < applePosition.X)
             {
