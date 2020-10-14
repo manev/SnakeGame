@@ -63,7 +63,7 @@ namespace SnakeProgram
 
                     if (snake.Print(currentKey, apple.Position))
                     {
-                        apple.Print(snake.GetPosition());
+                        apple.Print(snake.Position);
                     }
 
                     currentKey = CalculateNextPosition();
