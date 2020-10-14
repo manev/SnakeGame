@@ -12,6 +12,7 @@ namespace SnakeProgram
         private static Snake snake;
         private static Apple apple;
         private static ConsoleKey currentKey;
+        private static object _drawLock = new object();
 
         static void Main()
         {
@@ -29,7 +30,7 @@ namespace SnakeProgram
             snake = new Snake();
             apple = new Apple();
 
-            apple.DrawNew();
+            apple.Print();
 
             InitTimer();
 
@@ -39,33 +40,65 @@ namespace SnakeProgram
         private static void SetupConsole()
         {
             Console.OutputEncoding = Encoding.UTF8;
-            Console.BufferHeight = Console.WindowHeight = 30;
-            Console.BufferWidth = Console.WindowWidth = 75;
+            Console.BufferHeight = Console.WindowHeight = 40;
+            Console.BufferWidth = Console.WindowWidth = 85;
             Console.CursorVisible = false;
         }
 
         private static void InitTimer()
         {
             var timer = new Timer(50);
-            timer.Elapsed += OnTimerElapsed;
+            timer.Elapsed += Print;
             timer.Enabled = true;
             timer.Start();
         }
 
-        private static void OnTimerElapsed(object sender, ElapsedEventArgs e)
+        private static void Print(object sender, ElapsedEventArgs args)
         {
-            currentKey = Console.KeyAvailable ? Console.ReadKey().Key : currentKey;
-
-            if (snake.Draw(currentKey, apple.Position))
+            try
             {
-                apple.DrawNew(snake.GetPosition());
-            }
+                lock (_drawLock)
+                {
+                    currentKey = Console.KeyAvailable ? Console.ReadKey().Key : currentKey;
 
-            currentKey = CalculateNextPosition(snake.GetHeadPosition(), apple.Position);
+                    if (snake.Print(currentKey, apple.Position))
+                    {
+                        apple.Print(snake.GetPosition());
+                    }
+
+                    currentKey = CalculateNextPosition();
+                }
+            }
+            catch (Exception)
+            {
+                Reset(sender);
+            }
         }
 
-        private static ConsoleKey CalculateNextPosition(Point snakeHeadPosition, Point applePosition)
+        private static void Reset(object sender)
         {
+            var timer = sender as Timer;
+            timer.Elapsed -= Print;
+            timer.Enabled = false;
+            timer.Stop();
+            timer.Dispose();
+
+            Console.Clear();
+            Console.WriteLine("Game Over");
+            Console.ReadLine();
+            Console.Clear();
+
+            StartGame();
+        }
+
+        private static ConsoleKey CalculateNextPosition()
+        {
+            var snakeHeadPosition = snake.HeadPosition;
+
+            var applePosition = apple.Position;
+
+            var snakePositions = snake.GetPosition();
+
             if (snakeHeadPosition.X < applePosition.X)
             {
                 return ConsoleKey.RightArrow;

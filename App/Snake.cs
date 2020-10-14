@@ -7,15 +7,32 @@ namespace SnakeApp
 {
     internal class Snake
     {
-        private int length = 20;
+        private int length = 50;
 
         private List<Point> positions = new List<Point>();
 
-        public bool Draw(ConsoleKey key, Point targetPoint)
+        public Point HeadPosition
+        {
+            get
+            {
+                return positions[positions.Count - 1];
+            }
+        }
+
+        public bool Print(ConsoleKey key, Point targetPoint)
         {
             ClearLastPoint();
 
-            GetNextPoint(key).Draw();
+            var point = GetNextPoint(key);
+
+            if (positions.Any(position => position.X == point.X && position.Y == point.Y))
+            {
+                throw new Exception();
+            }
+
+            point.Print();
+
+            positions.Add(point);
 
             var hasInterceptions = positions.Any(position => position.X == targetPoint.X && position.Y == targetPoint.Y);
 
@@ -29,10 +46,6 @@ namespace SnakeApp
             return positions;
         }
 
-        public Point GetHeadPosition()
-        {
-            return positions[positions.Count - 1];
-        }
 
         private Point GetNextPoint(ConsoleKey key)
         {
@@ -59,7 +72,6 @@ namespace SnakeApp
                     break;
             }
 
-            positions.Add(point);
 
             return point;
         }

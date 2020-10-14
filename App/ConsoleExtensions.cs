@@ -5,7 +5,7 @@ namespace SnakeApp
 {
     internal static class ConsoleExtensions
     {
-        public static void Draw(this Point point, string symbol = "*")
+        public static void Print(this Point point, string symbol = "*")
         {
             Console.SetCursorPosition(point.X, point.Y);
 
@@ -14,7 +14,7 @@ namespace SnakeApp
 
         public static void Clear(this Point point)
         {
-            point.Draw(" ");
+            point.Print(" ");
         }
     }
 }

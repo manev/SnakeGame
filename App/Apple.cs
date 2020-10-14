@@ -8,13 +8,14 @@ namespace SnakeApp
     internal class Apple
     {
         private static Random random = new Random();
+
         public Point Position { get; set; }
 
-        public void DrawNew(IList<Point> snakePosition = null)
+        public void Print(IList<Point> snakePosition = null)
         {
             Position = GeneratePosition(snakePosition);
 
-            Position.Draw();
+            Position.Print("@");
         }
 
         private Point GeneratePosition(IEnumerable<Point> positions)
