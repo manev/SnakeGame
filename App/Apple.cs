@@ -11,7 +11,7 @@ namespace SnakeApp
 
         public Point Position { get; set; }
 
-        public void Print(IList<Point> snakePosition = null)
+        public void Print(IEnumerable<Point> snakePosition = null)
         {
             Position = GeneratePosition(snakePosition);
 

@@ -15,11 +15,11 @@ namespace SnakeApp
         {
             get
             {
-                return positions[positions.Count - 1];
+                return positions?.Count > 0 ? positions[positions.Count - 1] : Point.Empty;
             }
         }
 
-        public IList<Point> Position
+        public IEnumerable<Point> Position
         {
             get
             {
@@ -51,9 +51,7 @@ namespace SnakeApp
 
         private Point GetNextPoint(ConsoleKey key)
         {
-            var lastPoint = positions.Count == 0 ? new Point() : positions[positions.Count - 1];
-
-            var point = new Point(lastPoint.X, lastPoint.Y);
+            var point = new Point(HeadPosition.X, HeadPosition.Y);
 
             switch (key)
             {
