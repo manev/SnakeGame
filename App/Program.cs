@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Text;
 using System.Timers;
 
@@ -40,14 +39,14 @@ namespace SnakeProgram
         private static void SetupConsole()
         {
             Console.OutputEncoding = Encoding.UTF8;
-            Console.BufferHeight = Console.WindowHeight = 40;
-            Console.BufferWidth = Console.WindowWidth = 85;
+            Console.BufferHeight = Console.WindowHeight = 20;
+            Console.BufferWidth = Console.WindowWidth = 45;
             Console.CursorVisible = false;
         }
 
         private static void InitTimer()
         {
-            var timer = new Timer(50);
+            var timer = new Timer(100);
             timer.Elapsed += Print;
             timer.Enabled = true;
             timer.Start();
@@ -61,12 +60,10 @@ namespace SnakeProgram
                 {
                     currentKey = Console.KeyAvailable ? Console.ReadKey().Key : currentKey;
 
-                    if (snake.Print(currentKey, apple.Position))
+                    if (snake.CalculateNextPosition(apple.Position))
                     {
                         apple.Print(snake.Position);
                     }
-
-                    currentKey = CalculateNextPosition();
                 }
             }
             catch (Exception)
@@ -83,40 +80,12 @@ namespace SnakeProgram
             timer.Stop();
             timer.Dispose();
 
-            Console.Clear();
-            Console.WriteLine("Game Over");
+            // Console.Clear();
+            // Console.WriteLine("Game Over");
             Console.ReadLine();
-            Console.Clear();
+            // Console.Clear();
 
             StartGame();
-        }
-
-        private static ConsoleKey CalculateNextPosition()
-        {
-            var snakeHeadPosition = snake.HeadPosition;
-
-            var applePosition = apple.Position;
-
-            // var snakePosition = snake.Position;
-
-            if (snakeHeadPosition.X < applePosition.X)
-            {
-                return ConsoleKey.RightArrow;
-            }
-            else if (snakeHeadPosition.X > applePosition.X)
-            {
-                return ConsoleKey.LeftArrow;
-            }
-            else if (snakeHeadPosition.Y > applePosition.Y)
-            {
-                return ConsoleKey.UpArrow;
-            }
-            else if (snakeHeadPosition.Y < applePosition.Y)
-            {
-                return ConsoleKey.DownArrow;
-            }
-
-            return ConsoleKey.NoName;
         }
     }
 }

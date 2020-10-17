@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 
 namespace SnakeApp
 {
@@ -27,53 +26,78 @@ namespace SnakeApp
             }
         }
 
-        public bool Print(ConsoleKey key, Point targetPoint)
+        public bool CalculateNextPosition(Point applePosition)
+        {
+            var point = new Point(HeadPosition.X, HeadPosition.Y);
+
+            if (HeadPosition.X < applePosition.X)
+            {
+                point.X = point.X + 1 == Console.WindowWidth ? 0 : point.X + 1;
+            }
+            else if (HeadPosition.X > applePosition.X)
+            {
+                point.X = point.X - 1 == -1 ? Console.WindowWidth - 1 : point.X - 1;
+            }
+            else if (HeadPosition.Y > applePosition.Y)
+            {
+                point.Y = point.Y - 1 == -1 ? Console.WindowHeight - 1 : point.Y - 1;
+            }
+            else if (HeadPosition.Y < applePosition.Y)
+            {
+                point.Y = point.Y + 1 == Console.WindowHeight ? 0 : point.Y + 1;
+            }
+
+            return Print(point, applePosition);
+        }
+
+        private bool Print(Point printPoint, Point targetPoint)
         {
             ClearLastPoint();
 
-            var point = GetNextPoint(key);
-
-            if (positions.Any(position => position.X == point.X && position.Y == point.Y))
+            if (HasIntercection(printPoint))
             {
                 throw new Exception();
             }
 
-            point.Print();
+            printPoint.Print();
 
-            positions.Add(point);
+            positions.Add(printPoint);
 
-            var hasInterceptions = positions.Any(position => position.X == targetPoint.X && position.Y == targetPoint.Y);
+            var hasInterceptions = HasIntercection(targetPoint);
 
             length = hasInterceptions ? length + 1 : length;
 
             return hasInterceptions;
         }
 
-        private Point GetNextPoint(ConsoleKey key)
+        private Point FindPoint(Point point)
         {
-            var point = new Point(HeadPosition.X, HeadPosition.Y);
+            var intersectionPoint = FindIntersectionPoint(point);
 
-            switch (key)
+            if (intersectionPoint != null)
             {
-                case ConsoleKey.DownArrow:
-                    point.Y = point.Y + 1 == Console.WindowHeight ? 0 : point.Y + 1;
-                    break;
 
-                case ConsoleKey.UpArrow:
-                    point.Y = point.Y - 1 == -1 ? Console.WindowHeight - 1 : point.Y - 1;
-                    break;
-
-                case ConsoleKey.LeftArrow:
-                    point.X = point.X - 1 == -1 ? Console.WindowWidth - 1 : point.X - 1;
-                    break;
-
-                default:
-                    point.X = point.X + 1 == Console.WindowWidth ? 0 : point.X + 1;
-                    break;
             }
 
-
             return point;
+        }
+
+        private Point? FindIntersectionPoint(Point point)
+        {
+            foreach (var position in positions)
+            {
+                if (position.X == point.X && position.Y == point.Y)
+                {
+                    return position;
+                }
+            }
+
+            return null;
+        }
+
+        private bool HasIntercection(Point point)
+        {
+            return FindIntersectionPoint(point) != null;
         }
 
         private void ClearLastPoint()
