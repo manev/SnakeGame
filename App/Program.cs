@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Text;
 using System.Timers;
 
@@ -31,9 +32,12 @@ namespace SnakeProgram
 
             apple.Print();
 
-            InitTimer();
+            // InitTimer();
 
-            while (currentKey != ConsoleKey.Q) ;
+            while (currentKey != ConsoleKey.Q)
+            {
+                Print(null, null);
+            }
         }
 
         private static void SetupConsole()
@@ -60,13 +64,13 @@ namespace SnakeProgram
                 {
                     currentKey = Console.KeyAvailable ? Console.ReadKey().Key : currentKey;
 
-                    if (snake.CalculateNextPosition(apple.Position))
+                    if (snake.Print(apple.Position))
                     {
                         apple.Print(snake.Position);
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Reset(sender);
             }
@@ -74,11 +78,11 @@ namespace SnakeProgram
 
         private static void Reset(object sender)
         {
-            var timer = sender as Timer;
-            timer.Elapsed -= Print;
-            timer.Enabled = false;
-            timer.Stop();
-            timer.Dispose();
+            //var timer = sender as Timer;
+            //timer.Elapsed -= Print;
+            //timer.Enabled = false;
+            //timer.Stop();
+            //timer.Dispose();
 
             // Console.Clear();
             // Console.WriteLine("Game Over");
